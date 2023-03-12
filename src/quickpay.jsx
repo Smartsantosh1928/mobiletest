@@ -11,7 +11,7 @@ function Quickpay() {
 
     useEffect(() => {
         const intervalId = setInterval(async() => {
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist?timestamp=" + new Date().getTime(),{date:new Date(Date.now()).toLocaleDateString()})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:new Date(Date.now()).toLocaleDateString()})
          .then(res=>{
           setval1(res.data.totalAmount)})
         await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getexpenditureamd",{date:new Date(Date.now()).toLocaleDateString()})
@@ -23,7 +23,7 @@ function Quickpay() {
          .then(res=>setval5(res.data.wallet))
         await  axios.post("https://impossible-gold-shoulder-pads.cyclic.app/todayuser",{date:new Date(Date.now()).toLocaleDateString()})
          .then(res=>setval3(res.data.todayuser))
-        }, 2000);
+        }, 10000);
         return () => clearInterval(intervalId);
       }, []);
       const arr = ["collections","expenditure","sales","wallet","users"]
