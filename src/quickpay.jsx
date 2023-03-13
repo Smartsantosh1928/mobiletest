@@ -9,9 +9,19 @@ function Quickpay() {
     const[val4,setval4]=useState(0);
     const[val5,setval5]=useState(0);
 
+// create a new Date object
+const date = new Date(Date.now());
+
+// format the date string in mm-dd-yyyy format
+    const formattedDate = date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    }).replace(/\//g, '-');
+
     useEffect(() => {
         const intervalId = setInterval(async() => {
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:new Date(Date.now()).toLocaleDateString()})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:formattedDate})
          .then(res=>{
           setval1(res.data.totalAmount)})
         await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getexpenditureamd",{date:new Date(Date.now()).toLocaleDateString()})
