@@ -17,11 +17,12 @@ const date = new Date(Date.now());
       month: '2-digit',
       day: '2-digit',
       year: 'numeric'
-    }).replace(/\//g, '-');
-
+    }).replace(/\//g, '/');
+    const mydate = formattedDate.charAt(0)=='0' ? formattedDate.slice(1) : formattedDate;
+    console.log(mydate);
     useEffect(() => {
         const intervalId = setInterval(async() => {
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:formattedDate})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:mydate})
          .then(res=>{
           setval1(res.data.totalAmount)})
         await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getexpenditureamd",{date:new Date(Date.now()).toLocaleDateString()})
