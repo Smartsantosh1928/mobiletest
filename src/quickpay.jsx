@@ -10,7 +10,7 @@ function Quickpay() {
     const[val5,setval5]=useState(0);
 
 // create a new Date object
-const date = new Date(Date.now());
+const date = new Date("03/03/2023");
 
 // format the date string in mm-dd-yyyy format
     const formattedDate = date.toLocaleDateString('en-US', {
@@ -18,21 +18,22 @@ const date = new Date(Date.now());
       day: '2-digit',
       year: 'numeric'
     }).replace(/\//g, '/');
-    const mydate = formattedDate.charAt(0)=='0' ? formattedDate.slice(1) : formattedDate;
+    const mydate2 = formattedDate.charAt(3)=='0' ? formattedDate.slice(0,3)+formattedDate.slice(4) : formattedDate;
+    const mydate = mydate2.charAt(0)=='0' ? mydate2.slice(1) : mydate2;
     console.log(mydate);
     useEffect(() => {
         const intervalId = setInterval(async() => {
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:mydate})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getpaidlist",{date:mydate2})
          .then(res=>{
           setval1(res.data.totalAmount)})
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getexpenditureamd",{date:new Date(Date.now()).toLocaleDateString()})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/getexpenditureamd",{date:mydate2})
           .then(res=>{
            setval4(res.data.totalAmount)})
-        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/todaysale",{date:new Date(Date.now()).toLocaleDateString()})
+        await axios.post("https://impossible-gold-shoulder-pads.cyclic.app/todaysale",{date:mydate2})
          .then(res=>setval2(res.data.ts))
         await axios.get("https://impossible-gold-shoulder-pads.cyclic.app/wallet",{})
          .then(res=>setval5(res.data.wallet))
-        await  axios.post("https://impossible-gold-shoulder-pads.cyclic.app/todayuser",{date:new Date(Date.now()).toLocaleDateString()})
+        await  axios.post("https://impossible-gold-shoulder-pads.cyclic.app/todayuser",{date:mydate2})
          .then(res=>setval3(res.data.todayuser))
         }, 10000);
         return () => clearInterval(intervalId);
